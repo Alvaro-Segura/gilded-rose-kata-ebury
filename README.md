@@ -1,48 +1,61 @@
-## ⚔️ Gilded Rose Kata: A Refactoring Guide
+# ⚔️ Gilded Rose Kata: A Refactoring Guide
 
-Hi and welcome to team Gilded Rose. As you know, we are a small inn with a 
-prime location in a prominent city ran by a friendly innkeeper named 
-Allison. We also buy and sell only the finest goods. Unfortunately, our 
-goods are constantly degrading in quality as they approach their sell by 
-date. We have a system in place that updates our inventory for us. It was 
-developed by a no-nonsense type named Leeroy, who has moved on to new 
-adventures. Your task is to add the new feature to our system so that we 
-can begin selling a new category of items. First an introduction to our 
-system:
+Welcome, team! 🎉  
+Today, we’ll be working together on the famous **Gilded Rose Kata**. It’s a fun programming exercise that’s great for practice, learning, and collaborating in squads.
 
-- All items have a SellIn value which denotes the number of days we have 
-to sell the item
-- All items have a Quality value which denotes how valuable the item is
-- At the end of each day our system lowers both values for every item
+## Background
 
-Pretty simple, right? Well this is where it gets interesting:
+We run the **Gilded Rose Inn**, managed by Allison the innkeeper.  
+Our job is to handle inventory: buying and selling various goods. Each item has:
 
-- Once the sell by date has passed, Quality degrades twice as fast
-- The Quality of an item is never negative
-- "Aged Brie" actually increases in Quality the older it gets
-- The Quality of an item is never more than 50
-- "Sulfuras", being a legendary item, never has to be sold or decreases 
-in Quality
-- "Backstage passes", like aged brie, increases in Quality as it's SellIn 
-value approaches; Quality increases by 2 when there are 10 days or less 
-and by 3 when there are 5 days or less but Quality drops to 0 after the 
-concert
+- **SellIn**: Number of days left to sell it
+- **Quality**: How valuable it is
 
-We have recently signed a supplier of conjured items. This requires an 
-update to our system:
+Every day, our system automatically updates these numbers!
 
-- "Conjured" items degrade in Quality twice as fast as normal items
+## General Rules (Business Rules)
 
-Feel free to make any changes to the UpdateQuality method and add any 
-new code as long as everything still works correctly. However, do not 
-alter the Item class or Items property as those belong to the goblin 
-in the corner who will insta-rage and one-shot you as he doesn't 
-believe in shared code ownership (you can make the UpdateQuality 
-method and Items property static if you like, we'll cover for you).
+- Every item loses **1 Quality** and **1 SellIn** each day.
+- If the sell-by date is **past** (SellIn < 0), **Quality** drops **twice as fast** (–2/day).
+- **Quality never goes below 0**, and never above **50** (some exceptions).
 
-Just for clarification, an item can never have its Quality increase 
-above 50, however "Sulfuras" is a legendary item and as such its 
-Quality is 80 and it never alters.
+### Special Item Rules (extra rules)
+
+- **Aged Brie**:  
+  - Gets better with age: **Quality increases** each day (up to 50).
+
+- **Sulfuras, Hand of Ragnaros**:  
+  - Legendary, never sold!  
+  - **Quality always 80** and never changes.
+  
+- **Backstage Passes**:  
+  - Improve as the concert approaches:
+    - +1 Quality per day
+    - If 10 days left: **+2 Quality**
+    - If 5 days left: **+3 Quality**
+    - **After the concert (SellIn < 0): Quality drops to 0**
+
+- **Conjured Items (TO BE IMPLEMENTED)**:  
+  - Spoil faster: **Quality drops twice as fast as normal items**.
+
+### Your Mission
+
+- **Add support for "Conjured" items**: They go bad twice as fast as regular items.
+- You can change the `UpdateQuality` method and add any code you need.
+- **But:** Don’t change the `Item` class or the `Items` property (the goblin in the corner will get very angry! 🧙‍♂️).
+
+## Kata Guidelines
+
+- You cannot refactor **anything** until you have **100% test coverage** on the existing code.
+- Babby steps (atomic commits): Every relevant change should be committed to the repository with clear messages.
+Example: one commit for adding a small group of tests, another for refactoring a specific method, etc.
+- **Everytime someone makes a commit, another team member should take the lead**, pulling the latest changes and sharing their screen.
+- Tests should clearly express **what** business rule is being tested, not just the function being called.
+Example: `test_quality_of_item_is_never_more_than_50` is good, while `test_item_quality` is not.
+- The goal is not to rewrite the code from scratch, but to improve its design incrementally, ensuring that the existing tests do not break in the process.
+- **Once you finish refactoring the code, add the new feature for "Conjured" items along with the necessary tests.**
+
+Let’s have some fun and see how creative we can get! 🚀
 
 ---
 
@@ -61,22 +74,9 @@ pip install -r requirements.txt
 ```
 5. Make sure the tests run
 ```
-python -m unittest
+python -m pytest
 ```
----
 
-### HOW TO PROCEED
-
-The objective of this kata is to practice **refactoring legacy code**. The goal is not to rewrite the code from scratch, but to improve its design incrementally, ensuring that the existing tests do not break in the process.
-
-The recommended natural procedure is as follows:
-
-1.  **Establish Comprehensive Testing:** Write the necessary unit tests to cover the existing code, aiming for **100% test coverage**.
-2.  **Incremental Refactoring:** Refactor the code in small, atomic steps. After each change, run the tests to ensure no existing functionality is broken.
-3.  **Implement New Feature:** Once all collaborators agree that the code is sufficiently refactored, proceed to implement the new required functionality (the "Conjured" items), following the same procedure of small steps and frequent testing.
-4.  **Atomic Commits:** To facilitate team collaboration and review, make atomic changes. Each commit to the repository should represent a small, coherent change that can be easily reviewed and discussed by other team members. After a commit, collaborators should pull the latest changes to ensure they are working with the most up-to-date version.
-5.  **Active Collaboration:** It is crucial for all team members to participate in the discussion of proposed changes, offering ideas and suggestions to improve the code's design. Collaboration and knowledge sharing are key to the success of this exercise.
-6.  **Share Results:** The final idea is to share all results at the end of the exercise so we can see how the other teams have solved the same problem.
 ---
 
 ### TEST COVERAGE
@@ -93,5 +93,6 @@ make test-coverage
 <img src="images/project_tree.png" alt="Estructura del Proyecto" width="500"/>
 
 <img src="images/main_file_coverage.png" alt="Reporte de Cobertura del Archivo Principal" width="600"/>
+
 ---
 
