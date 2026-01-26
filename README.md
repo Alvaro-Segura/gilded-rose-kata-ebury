@@ -55,6 +55,7 @@ Example: one commit for adding a small group of tests, another for refactoring a
 - Tests should clearly express **what** business rule is being tested, not just the function being called.
 Example: `test_quality_of_item_is_never_more_than_50` is good, while `test_item_quality` is not.
 - The goal is not to rewrite the code from scratch, but to improve its design incrementally, ensuring that the existing tests do not break in the process.
+- You are free to use any library or framework that helps you achieve the goal, but should not alter the existing functionality.
 - **Once you finish refactoring the code, add the new feature for "Conjured" items along with the necessary tests.**
 
 Let’s have some fun and see how creative we can get! 🚀
@@ -63,7 +64,7 @@ Let’s have some fun and see how creative we can get! 🚀
 
 ## GETTING STARTED
 
-1. Create a fork of this repository in your own GitHub account, so you can make changes with your colleagues and work over the same project
+1. **Create a new branch for your squad** of this repository in your own GitHub account, so you can make changes with your colleagues and work over the same project
 2. Clone the repository in your local machine.
 3. Create a Python virtual environment
 ```
