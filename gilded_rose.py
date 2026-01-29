@@ -12,6 +12,8 @@ class GildedRose(object):
                     update_aged_brie(item)
                 case "Backstage passes to a TAFKAL80ETC concert":
                     update_backstage_pass(item)
+                case "Conjured":
+                    update_conjured(item)
                 case _:
                     update_general(item)
 
@@ -32,9 +34,9 @@ def update_aged_brie(item):
 
 def update_general(item):
     if item.sell_in > 0:
-        item.quality = min(item.quality - 1, 0)
+        item.quality = max(item.quality - 1, 0)
     else:
-        item.quality = min(item.quality - 2, 0)
+        item.quality = max(item.quality - 2, 0)
     item.sell_in -= 1
 
 def update_backstage_pass(item):
@@ -46,3 +48,10 @@ def update_backstage_pass(item):
 
     if item.sell_in < 0:
         item.quality = 0
+
+def update_conjured(item):
+    if item.sell_in > 0:
+        item.quality = max(item.quality - 2, 0)
+    else:
+        item.quality = max(item.quality - 4, 0)
+    item.sell_in -= 1
