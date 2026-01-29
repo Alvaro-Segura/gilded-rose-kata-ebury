@@ -38,11 +38,11 @@ def update_general(item):
     item.sell_in -= 1
 
 def update_backstage_pass(item):
+    item.quality += 1
+    if item.sell_in <= 5:
+        item.quality += 1
+    if item.sell_in <= 10:
+        item.quality += 1
+
     if item.sell_in < 0:
         item.quality = 0
-    elif item.sell_in <= 5: 
-        item.quality += 3
-    elif item.sell_in <= 10: 
-        item.quality += 2
-    else:
-        item.quality += 1

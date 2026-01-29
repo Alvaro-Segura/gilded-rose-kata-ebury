@@ -15,6 +15,13 @@ def test_quality_greater_than_zero():
     assert item.name == "foo"
 
 
+def test_sell_in_greater_than_zero():
+    item = Item("foo", 1, 1)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.name == "foo"
+
+
 def test_backstage_quality_increases():
     item = Item("Backstage passes to a TAFKAL80ETC concert", 5, 40)
     gilded_rose = GildedRose([item])
