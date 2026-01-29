@@ -7,15 +7,20 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
-            match item.name:
-                case "Aged Brie":
-                    update_aged_brie(item)
-                case "Backstage passes to a TAFKAL80ETC concert":
-                    update_backstage_pass(item)
-                case "Conjured":
-                    update_conjured(item)
-                case _:
-                    update_general(item)
+            if item.name == "Aged Brie":
+                update_aged_brie(item)
+
+            elif item.name == "Backstage passes to a TAFKAL80ETC concert":
+                update_backstage_pass(item)
+
+            elif item.name == "Sulfuras, Hand of Ragnaros":
+                update_sulfuras(item)
+
+            elif item.name == "Conjured":
+                update_conjured(item)
+
+            else:
+                update_general(item)
 
 class Item:
     def __init__(self, name, sell_in, quality):
@@ -26,11 +31,13 @@ class Item:
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
+
 def update_aged_brie(item):
     item.quality = min(item.quality + 1, 50)
     item.sell_in -= 1
     if item.sell_in < 0 :
         item.quality = min(item.quality + 1, 50)
+
 
 def update_general(item):
     if item.sell_in > 0:
@@ -38,6 +45,7 @@ def update_general(item):
     else:
         item.quality = max(item.quality - 2, 0)
     item.sell_in -= 1
+
 
 def update_backstage_pass(item):
     item.quality += 1
@@ -48,6 +56,11 @@ def update_backstage_pass(item):
 
     if item.sell_in < 0:
         item.quality = 0
+
+
+def update_sulfuras(item):
+    item.quality = 80
+
 
 def update_conjured(item):
     if item.sell_in > 0:
